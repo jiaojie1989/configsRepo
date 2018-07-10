@@ -1,0 +1,110 @@
+SPL - Data Structures
+===
+* SplDoublyLinkedList
+	void __construct(void);
+	void add(mixed $index, mixed $newval);
+	mixed bottom(void);
+	int count(void);
+	mixed current(void);
+	bool isEmpty(void);
+	mixed key(void);
+	void next(void);
+	bool offsetExists(mixed $index);
+	mixed offsetGet(mixed $index);
+	void offsetSet(mixed $index, mixed $newval);
+	void offsetUnset(mixed $index);
+	mixed pop(void);
+	void prev(void);
+	void push(mixed $val);
+	void rewind(void);
+	string serialize(void);
+	void setIteratorMode (int $mode);
+	mixed shift(void);
+	mixed top(void);
+	void unserialize(string $serialized);
+	void unshift(mixed $val);
+	bool valid(void);
+* SplStack extends SplDoublyLinkedList
+	void __construct(void);
+	void setIteratorMode(int $mode);
+* SplQueue extends SplDoublyLinkedList
+	void __construct(void);
+	mixed dequeue(void);
+	void enqueue(mixed $val);
+	void setIteratorMode(int $mode);
+
+* [a] SplHeap 
+	void __construct(void);
+	[a] int compare(mixed $val1, mixed $val2);
+	int count(void);
+	mixed current(void);
+	mixed extract(void);
+	void insert(mixed $val);
+	bool isEmpty(void);
+	mixed key(void);
+	void next(void);
+	void recoverFromCorruption(void);
+	void rewind(void);
+	mixed top(void);
+	bool valid(void);
+* SplMaxHeap extends SplHeap
+	int compare(mixed $val1, mixed $val2);
+* SplMinHeap extends SplHeap
+	int compare(mixed $val1, mixed $val2);
+
+* SplPriorityQueue
+	void __construct(void);
+	int compare(mixed $priority1, mixed $priority2);
+	int count(void);
+	mixed current(void);
+	mixed extract(void);
+	void insert(mixed $val, mixed $priority);
+	bool isEmpty(void);
+	mixed key(void);
+	void next(void);
+	void recoverFromCorruption(void);
+	void rewind(void);
+	void setExtractFlags(int $flags);
+	mixed top(void);
+	bool valid(void);
+
+* SplFixedArray
+	void __construct([int $size = 0]);
+	int count(void);
+	mixed current(void);
+	[s] SplFixedArray fromArray(array $array[, bool $save_indexes = true]);
+	int getSize(void);
+	int key(void);
+	void next(void);
+	bool offsetExists(int $index);
+	mixed offsetGet(int $index);
+	void offsetSet(int $index, mixed $newval);
+	void offsetUnset(int $index);
+	void rewind(void);
+	int setSize(int $size);
+	array toArray(void);
+	bool valid(void);
+	void __wakeup(void);
+
+* SplObjectStorage
+	void addAll(SplObjectStorage $storage);
+	void attach(object $object[, mixed $data = NULL]);
+	bool contains(object $object);
+	int count(void);
+	object current(void);
+	void detach(object $object);
+	string getHash(object $ojbect);
+	mixed getInfo(void);
+	int key(void);
+	void next(void);
+	bool offsetExists(object $object);
+	mixed offsetGet(object $object);
+	void offsetSet(object $object[, mixed $data = NULL]);
+	void offsetUnset(ojbect $object);
+	void removeAll(SplObjectStorage $storage);
+	void removeAllExcept(SplObjectStorage $storage);
+	void rewind(void);
+	string serialize(void);
+	void setInfo(mixed $data);
+	void unserialize(string $serialized);
+	bool valid(void);

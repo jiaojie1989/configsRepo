@@ -1,0 +1,113 @@
+@startuml
+
+skinparam defaultFontName JIAOJIE
+skinparam handwritten true
+skinparam footerFontName WenQuanYi Zen Hei Mono
+
+
+title
+A Dingtalk Robot's Message Sending Design
+(Based on symfony console application)
+end title
+
+left header
+<img:http://d.lanrentuku.com/down/png/1410/bw_halloween/bat-3-256.png {scale=0.08}> Batman
+end header
+
+skinparam defaultFontName JIAOJIE
+skinparam handwritten true
+'skinparam footerFontName WenQuanYi Zen Hei Mono
+'skinparam titleFontName WenQuanYi Zen Hei Mono
+skinparam monochrome true
+
+
+left to right direction
+actor "User\nor Cron" as user
+() "CLI\nEntrance" as cli
+
+user --> cli
+
+package "Symfony Console Application" {
+    package "Commands Manager" {
+        component "Scheduled Task"
+        component "Alias Task"
+    }
+}
+
+cli --> [Scheduled Task]
+cli --> [Alias Task]
+
+package "Dingtalk Robot SDK" {
+    () "SDK Interface" as sdkapi
+    
+    control "Send Controller"
+
+    package "Send Module" {
+        component "Http Client"
+        component "Error Handler"
+    }
+
+    package "Send Strategy Module" {
+        package "Send Status" {
+            component "Datatime Convertor"
+            component "Redis Connector"
+        }
+        component "Send Strategy"
+    }
+
+    package "Task Parser" {
+        component "YAML Parser"
+        component "Config Combiner"
+        component "Syntax Checker"
+    }
+
+    package "Content Builder" {
+        component "Content Factory"
+        package "Content Types" {
+            component "Callback"
+            component "Weather"
+            component "Raw"
+            component "..."
+        }
+    }
+}
+
+storage "Storages" {
+    storage  "YAML File" << File >>
+    database "Status Storage" <<Redis>>
+}
+
+[Content Factory] --o [Callback]
+[Content Factory] --o [Weather]
+[Content Factory] --o [Raw]
+[Content Factory] --o [...]
+
+[Scheduled Task] --> sdkapi
+[Alias Task] --> sdkapi
+
+[Send Controller] <-- sdkapi
+[Send Controller] --> [YAML Parser]
+[Send Controller] --> [Send Strategy]
+[Send Controller] --> [Http Client]
+
+[YAML Parser] --o [Syntax Checker]
+[YAML Parser] --o [Config Combiner]
+[YAML Parser] ---o [Content Factory]
+[YAML Parser] --> [Send Strategy]
+
+[Send Strategy] --o [Datatime Convertor]
+[Status Storage] <.. [Redis Connector]
+[Send Strategy] --o [Redis Connector]
+
+[Http Client] --o [Error Handler]
+[Send Strategy] --> [Http Client]
+
+
+
+[YAML Parser] ..> [YAML File]
+
+
+
+
+
+@enduml

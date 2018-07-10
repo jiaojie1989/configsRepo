@@ -1,0 +1,28 @@
+pcntl
+===
+* int pcntl_fork()
+	产生子进程
+	父进程的返回结果为子进程的pid，子进程的返回结果为0
+	父进程返回-1为失败，同时产生一个PHP错误
+	子进程和父进程都从这里之后执行
+	好的建议是子进程设定一个exit执行
+
+* bool pcntl_signal(int $signo, callback $handler[, bool $restart_syscalls])
+	为signo指定的信号，安装一个新的信号发生器
+
+* bool posix_kill(int $pid, int $sig)
+	向进程发送信号
+
+* int pcntl_wait(int &$status[, $options])
+	进程挂起，直到任意子进程结束、接收到一个信号要求中断当前进程、调用一个信号处理函数
+
+* int pcntl_waitpid(int $pid, int &$status[, int $options = 0])
+	$pid 决定该函数的用法
+		$pid < -1
+			等待任意进程组ID等于pid绝对值的进程(好像不太行???)
+		$pid = -1
+			等待任意子进程(等同于pcntl_wait的行为)
+		$pid = 0
+			等待任意与调用进程组ID相同的子进程
+		$pid > 0
+			等待进程号为pid的子进程
